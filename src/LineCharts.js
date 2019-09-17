@@ -73,7 +73,7 @@ export class LineCharts extends React.Component {
       data = dummyData;
     }
     return (
-      <Line data={data} options={options} width={1200} height={400} onHover={this.handleHover}/>
+      <Line data={data} options={options} width={1200} height={400}/>
     )
   }
 
@@ -114,14 +114,21 @@ export class LineCharts extends React.Component {
   }
 
   setData(rawData) {
-    console.log(rawData);
-    let byBenchMarkAndMetric = new Map();
+    let benchmarksAndMetrics = new Set();
     let shaList = [];
     let revisions = [];
     rawData.forEach(x => {
-      console.log(x);
       shaList.push(x.sha.substring(0, 7));
       revisions.push({sha: x.sha, title: x.title, author: x.author, date: x.date});
+      x.results.forEach(y => {
+        let key = y.benchmark + ":" + y.metric;
+        benchmarksAndMetrics.add(key);
+      })
+    });
+
+    let byBenchMarkAndMetric = new Map();
+    rawData.forEach(x => {
+      let benchmarksAndMetricsForSha = new Set(benchmarksAndMetrics);
       x.results.forEach(y => {
         let key = y.benchmark + ":" + y.metric;
         let list = byBenchMarkAndMetric.get(key);
@@ -130,8 +137,18 @@ export class LineCharts extends React.Component {
         }
         list.push(y.value);
         byBenchMarkAndMetric.set(key, list);
-      })
+        benchmarksAndMetricsForSha.delete(key);
+      });
+      benchmarksAndMetricsForSha.forEach(key => {
+        let list = byBenchMarkAndMetric.get(key);
+        if (!list) {
+          list = [];
+        }
+        list.push(null);
+        byBenchMarkAndMetric.set(key, list);
+      });
     });
+
     let dataSets = [];
     byBenchMarkAndMetric.forEach((v, k, m) => {
       let ds = Object.assign({}, datasetOptions);
@@ -144,7 +161,6 @@ export class LineCharts extends React.Component {
       datasets: dataSets,
       revisions: revisions
     };
-    console.log(data);
     this.setState({data: data});
   }
 }
