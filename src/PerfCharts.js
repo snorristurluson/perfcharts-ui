@@ -9,7 +9,7 @@ export class PerfCharts extends React.Component {
     this.handleBranchChange = this.handleBranchChange.bind(this);
     this.handleBenchmarkChange = this.handleBenchmarkChange.bind(this);
     this.handleMetricChange = this.handleMetricChange.bind(this);
-    this.state = {exe: "", repo: "", branch: new Set(), benchmarks: new Set(), metrics: new Set()};
+    this.state = {exe: "", repo: "", branch: "", benchmarks: new Set(), metrics: new Set()};
   }
 
   handleExeChange(exe, repo) {

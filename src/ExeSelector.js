@@ -22,6 +22,10 @@ export class ExeSelector extends React.Component {
   }
 
   render() {
+    let singleRepo = true;
+    let repos = new Set(this.state.exes.map(r => r.repo.name));
+    console.log("repos:", repos);
+    singleRepo = repos.size < 2;
     var title = this.props.exe + ":" + this.props.repo;
     return (
       <FormControl component={"executables"}>
@@ -35,8 +39,9 @@ export class ExeSelector extends React.Component {
         >
           {this.state.exes.map(r => {
             let combined = r.name + ":" + r.repo.name;
+            let label = singleRepo ? r.name : combined;
             console.log(combined);
-            return <MenuItem key={combined} value={combined}>{combined}</MenuItem>
+            return <MenuItem key={combined} value={combined}>{label}</MenuItem>
           })}
         </Select>
       </FormControl>

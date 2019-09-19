@@ -3,7 +3,8 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import {fetchData} from "./fetchutils";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import {Checkbox} from "@material-ui/core";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 
 export class BranchSelector extends React.Component {
   constructor(props) {
@@ -43,13 +44,8 @@ export class BranchSelector extends React.Component {
   }
 
   handleChange(event) {
-    let newSet = new Set(this.props.selected);
-    if (event.target.checked) {
-      newSet.add(event.target.id);
-    } else {
-      newSet.delete(event.target.id);
-    }
-    this.props.onChange(newSet);
+    console.log(event);
+    this.props.onChange(event.target.value);
   }
 
   render() {
@@ -57,14 +53,17 @@ export class BranchSelector extends React.Component {
     return (
       <FormControl component={"branches"}>
         <FormLabel component={"legend"}>Branch</FormLabel>
+        <RadioGroup value={this.props.branch} onChange={this.handleChange}>
         {this.state.branches.map(br => {
           return (
             <FormControlLabel
-              control={<Checkbox id={br.name} onChange={this.handleChange}/>}
+              value={br.name}
+              control={<Radio/>}
               label={br.name}
             />
           )
         })}
+        </RadioGroup>
       </FormControl>
     )
   }
