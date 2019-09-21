@@ -51,7 +51,7 @@ const options = {
   }
 };
 
-export class LineCharts extends React.Component {
+export class TimeLineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {data: null};

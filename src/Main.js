@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {Timeline} from "./Timeline";
+import {BranchComparison} from "./BranchComparison";
 
 export class Main extends React.Component {
   constructor(props) {
@@ -43,9 +44,7 @@ export class Main extends React.Component {
       )
     } else if (this.state.view === "compare-branches") {
       return (
-        <div>
-          Comparing branches
-        </div>
+        <BranchComparison classes={this.props.classes}/>
       )
     }
   }

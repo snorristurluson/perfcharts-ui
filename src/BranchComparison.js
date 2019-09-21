@@ -1,53 +1,48 @@
 import React from "react";
+import {BranchComparisonChart} from "./BranchComparisonChart";
+import {BranchComparisonDataSelector} from "./BranchComparisonDataSelector";
 import {TimeLineDataSelector} from "./TimeLineDataSelector";
 import {TimeLineChart} from "./TimeLineChart";
 
-export class Timeline extends React.Component {
+export class BranchComparison extends React.Component {
   constructor(props) {
     super(props);
-    this.handleExeChange = this.handleExeChange.bind(this);
-    this.handleBranchChange = this.handleBranchChange.bind(this);
-    this.handleBenchmarkChange = this.handleBenchmarkChange.bind(this);
-    this.handleMetricChange = this.handleMetricChange.bind(this);
-    this.state = {exe: "", repo: "", branch: "", benchmarks: new Set(), metrics: new Set()};
+    this.state = {exe: "", repo: "", branches: new Set(), benchmarks: new Set(), metrics: new Set()};
+
   }
 
-  handleExeChange(exe, repo) {
-    console.log(exe, repo);
+  handleExeChange = (exe, repo) => {
     this.setState({exe: exe, repo: repo});
-  }
+  };
 
-  handleBranchChange(branch) {
-    console.log(branch);
-    this.setState({branch: branch});
-  }
+  handleBranchChange = branches => {
+    this.setState({branches: branches});
+  };
 
-  handleBenchmarkChange(benchmarks) {
-    console.log(benchmarks);
+  handleBenchmarkChange = benchmarks => {
     this.setState({benchmarks: benchmarks});
-  }
+  };
 
-  handleMetricChange(metrics) {
-    console.log(metrics);
+  handleMetricChange = metrics => {
     this.setState({metrics: metrics});
-  }
+  };
 
-  render() {
+
+
+  render () {
     return (
       <div>
-        <br/>
-        <TimeLineChart
+        <BranchComparisonChart
           exe={this.state.exe}
           repo={this.state.repo}
-          branch={this.state.branch}
+          branches={this.state.branches}
           benchmarks={this.state.benchmarks}
           metrics={this.state.metrics}
         />
-        <br/>
-        <TimeLineDataSelector
+        <BranchComparisonDataSelector
           exe={this.state.exe}
           repo={this.state.repo}
-          branch={this.state.branch}
+          branches={this.state.branches}
           benchmarks={this.state.benchmarks}
           metrics={this.state.metrics}
           onExeChange={this.handleExeChange}
@@ -56,6 +51,6 @@ export class Timeline extends React.Component {
           onMetricChange={this.handleMetricChange}
         />
       </div>
-    )
+      )
   }
 }

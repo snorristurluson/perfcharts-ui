@@ -5,7 +5,7 @@ import {BenchmarkSelector} from "./BenchmarkSelector";
 import {MetricSelector} from "./MetricSelector";
 import Grid from "@material-ui/core/Grid";
 
-export class DataSelector extends React.Component {
+export class TimeLineDataSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
