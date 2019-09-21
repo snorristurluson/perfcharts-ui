@@ -2,7 +2,7 @@ import React from "react";
 import {DataSelector} from "./DataSelector";
 import {LineCharts} from "./LineCharts";
 
-export class PerfCharts extends React.Component {
+export class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.handleExeChange = this.handleExeChange.bind(this);
