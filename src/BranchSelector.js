@@ -27,14 +27,12 @@ export class BranchSelector extends React.Component {
     if (this.props.repo === "") {
       return;
     }
-    console.log("Fetching branches for", this.props.repo);
     fetchData(
       "/branches/" + this.props.repo,
         data => {
-          console.log(data);
-          if (!data.includes(this.props.branch)) {
+          if (this.props.branch === "") {
             if (data.length > 0) {
-              this.props.onChange(data[0]);
+              this.props.onChange(data[0].name);
             } else {
               this.props.onChange("");
             }
@@ -44,20 +42,19 @@ export class BranchSelector extends React.Component {
   }
 
   handleChange(event) {
-    console.log(event);
     this.props.onChange(event.target.value);
   }
 
   render() {
-    console.log(this.props);
     return (
-      <FormControl component={"branches"}>
+      <FormControl>
         <FormLabel component={"legend"}>Branch</FormLabel>
         <RadioGroup value={this.props.branch} onChange={this.handleChange}>
         {this.state.branches.map(br => {
           return (
             <FormControlLabel
               value={br.name}
+              key={br.name}
               control={<Radio/>}
               label={br.name}
             />

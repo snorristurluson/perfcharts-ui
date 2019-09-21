@@ -37,7 +37,7 @@ export function fetchData(url, cb) {
     })
     .then(data => cb(data))
     .catch(function () {
-      console.log("error");
+      console.log("error fetching from %s", url);
     })
 }
 

@@ -1,8 +1,6 @@
 import React from "react";
 import {BranchComparisonChart} from "./BranchComparisonChart";
 import {BranchComparisonDataSelector} from "./BranchComparisonDataSelector";
-import {TimeLineDataSelector} from "./TimeLineDataSelector";
-import {TimeLineChart} from "./TimeLineChart";
 
 export class BranchComparison extends React.Component {
   constructor(props) {

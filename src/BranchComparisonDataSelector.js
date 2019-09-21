@@ -6,11 +6,6 @@ import {BenchmarkSelector} from "./BenchmarkSelector";
 import {MetricSelector} from "./MetricSelector";
 
 export class BranchComparisonDataSelector extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   render () {
     return (
       <Grid container spacing={3} justify={"space-around"}>

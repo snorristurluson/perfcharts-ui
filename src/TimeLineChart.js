@@ -80,23 +80,18 @@ export class TimeLineChart extends React.Component {
   getData() {
     let hasRequiredInputs = true;
     if (!this.props.repo) {
-      console.log("No repo set");
       hasRequiredInputs = false;
     }
     if (!this.props.exe) {
-      console.log("No executable set");
       hasRequiredInputs = false;
     }
     if (!this.props.branch) {
-      console.log("No branch set");
       hasRequiredInputs = false;
     }
     if (!this.props.benchmarks || this.props.benchmarks.size === 0) {
-      console.log("No benchmarks set");
       hasRequiredInputs = false;
     }
     if (!this.props.metrics || this.props.metrics.size === 0) {
-      console.log("No metrics set");
       hasRequiredInputs = false;
     }
     if (!hasRequiredInputs) {

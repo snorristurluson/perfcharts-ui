@@ -28,13 +28,14 @@ export class MetricSelector extends React.Component {
 
   render() {
     return (
-      <FormControl component={"metrics"}>
+      <FormControl>
         <FormLabel component={"legend"}>Metrics</FormLabel>
         {this.state.metrics.map(m => {
           return (
             <FormControlLabel
               control={<Checkbox id={m.name} onChange={this.handleChange}/>}
               label={m.name}
+              key={m.name}
             />
           )
         })}

@@ -9,27 +9,35 @@ export class Timeline extends React.Component {
     this.handleBranchChange = this.handleBranchChange.bind(this);
     this.handleBenchmarkChange = this.handleBenchmarkChange.bind(this);
     this.handleMetricChange = this.handleMetricChange.bind(this);
-    this.state = {exe: "", repo: "", branch: "", benchmarks: new Set(), metrics: new Set()};
+    this.handleReferenceChange = this.handleReferenceChange.bind(this);
+    this.state = {
+      exe: "",
+      repo: "",
+      branch: "",
+      benchmarks: new Set(),
+      metrics: new Set(),
+      reference: ""
+    };
   }
 
   handleExeChange(exe, repo) {
-    console.log(exe, repo);
     this.setState({exe: exe, repo: repo});
   }
 
   handleBranchChange(branch) {
-    console.log(branch);
     this.setState({branch: branch});
   }
 
   handleBenchmarkChange(benchmarks) {
-    console.log(benchmarks);
     this.setState({benchmarks: benchmarks});
   }
 
   handleMetricChange(metrics) {
-    console.log(metrics);
     this.setState({metrics: metrics});
+  }
+
+  handleReferenceChange(reference) {
+    this.setState({reference: reference});
   }
 
   render() {
@@ -42,6 +50,7 @@ export class Timeline extends React.Component {
           branch={this.state.branch}
           benchmarks={this.state.benchmarks}
           metrics={this.state.metrics}
+          reference={this.state.reference}
         />
         <br/>
         <TimeLineDataSelector
@@ -50,10 +59,12 @@ export class Timeline extends React.Component {
           branch={this.state.branch}
           benchmarks={this.state.benchmarks}
           metrics={this.state.metrics}
+          reference={this.state.reference}
           onExeChange={this.handleExeChange}
           onBranchChange={this.handleBranchChange}
           onBenchmarkChange={this.handleBenchmarkChange}
           onMetricChange={this.handleMetricChange}
+          onReferenceChange={this.handleReferenceChange}
         />
       </div>
     )

@@ -38,8 +38,6 @@ export class BranchComparisonChart extends React.Component {
     if (data == null) {
       data = dummyData;
     }
-    console.log("rendering data:", data);
-    console.log("dummyData:", dummyData);
     return (
       <div>
         <Bar data={data} options={options} width={1200} height={400}/>
@@ -50,42 +48,34 @@ export class BranchComparisonChart extends React.Component {
   getData() {
     let hasRequiredInputs = true;
     if (!this.props.repo) {
-      console.log("No repo set");
       hasRequiredInputs = false;
     }
     if (!this.props.exe) {
-      console.log("No executable set");
       hasRequiredInputs = false;
     }
     if (!this.props.branches || this.props.branches.size === 0) {
-      console.log("No branches set");
       hasRequiredInputs = false;
     }
     if (!this.props.benchmarks || this.props.benchmarks.size === 0) {
-      console.log("No benchmarks set");
       hasRequiredInputs = false;
     }
     if (!this.props.metrics || this.props.metrics.size === 0) {
-      console.log("No metrics set");
       hasRequiredInputs = false;
     }
     if (!hasRequiredInputs) {
       this.setState({data: null});
     } else {
-      console.log("BranchComparisonChart getting data");
       let url = "/comparebranches/";
       url += this.props.exe + "/";
       url += this.props.repo + "/";
       url += Array.from(this.props.branches).join("|") + "/";
       url += Array.from(this.props.benchmarks).join("|") + "/";
       url += Array.from(this.props.metrics).join("|") + "/";
-      console.log(url);
       fetchData(url, data => this.setData(data));
     }
   }
 
   setData(rawData) {
-    console.log(rawData);
     let dataSets = [];
     let labels = [];
     let byBenchMarkAndMetric = new Map();

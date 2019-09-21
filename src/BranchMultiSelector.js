@@ -10,7 +10,6 @@ export class BranchMultiSelector extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {branches: []};
-    console.log("bms constructor: ", this.props.selected);
   }
 
   componentDidMount() {
@@ -27,16 +26,14 @@ export class BranchMultiSelector extends React.Component {
     if (this.props.repo === "") {
       return;
     }
-    console.log("Fetching branches for", this.props.repo);
     fetchData(
       "/branches/" + this.props.repo,
       data => {
-                                 this.setState({branches: data});
+        this.setState({branches: data});
       });
   }
 
   handleChange(event) {
-    console.log("bms handlechange: ", this.props.selected);
     let newSet = new Set(this.props.selected);
     if (event.target.checked) {
       newSet.add(event.target.id);
@@ -47,15 +44,15 @@ export class BranchMultiSelector extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
-      <FormControl component={"branches"}>
+      <FormControl>
         <FormLabel component={"legend"}>Branch</FormLabel>
         {this.state.branches.map(br => {
           return (
             <FormControlLabel
               control={<Checkbox id={br.name} onChange={this.handleChange}/>}
               label={br.name}
+              key={br.name}
             />
           )
         })}

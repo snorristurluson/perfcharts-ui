@@ -13,7 +13,14 @@ export class ExeSelector extends React.Component {
   }
 
   componentDidMount() {
-    fetchData("/executables/", data => this.setState({exes: data}));
+    fetchData("/executables/", data => this.setData(data));
+  }
+
+  setData(data) {
+    this.setState({exes: data});
+    if (this.props.exe === "") {
+      this.props.onChange(data[0].name, data[0].repo.name);
+    }
   }
 
   handleChange(e, _) {
@@ -24,12 +31,11 @@ export class ExeSelector extends React.Component {
   render() {
     let singleRepo = true;
     let repos = new Set(this.state.exes.map(r => r.repo.name));
-    console.log("repos:", repos);
     singleRepo = repos.size < 2;
-    var title = this.props.exe + ":" + this.props.repo;
+    const title = this.props.exe + ":" + this.props.repo;
     return (
-      <FormControl component={"executables"}>
-        <FormLabel component={"legend"}>
+      <FormControl>
+        <FormLabel component="legend">
           Executable
         </FormLabel>
         <Select
@@ -40,7 +46,6 @@ export class ExeSelector extends React.Component {
           {this.state.exes.map(r => {
             let combined = r.name + ":" + r.repo.name;
             let label = singleRepo ? r.name : combined;
-            console.log(combined);
             return <MenuItem key={combined} value={combined}>{label}</MenuItem>
           })}
         </Select>
