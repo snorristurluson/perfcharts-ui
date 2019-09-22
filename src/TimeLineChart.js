@@ -54,7 +54,7 @@ const options = {
 export class TimeLineChart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data: null};
+    this.state = {data: null, refData: null};
   }
 
   componentDidMount() {
@@ -97,18 +97,50 @@ export class TimeLineChart extends React.Component {
     if (!hasRequiredInputs) {
       this.setState({data: null});
     } else {
-      console.log("LineCharts getting data");
-      let url = "/chartdata/";
-      url += this.props.exe + "/";
-      url += this.props.repo + "/";
-      url += this.props.branch + "/";
-      url += Array.from(this.props.benchmarks).join("|") + "/";
-      url += Array.from(this.props.metrics).join("|") + "/";
-      fetchData(url, data => this.setData(data));
+      if (this.props.reference) {
+        console.log("LineCharts getting reference data");
+        let url = "/refdata/";
+        url += this.props.exe + "/";
+        url += this.props.repo + "/";
+        url += this.props.reference;
+        fetchData(url, data => {
+          this.setRefData(data);
+          this.getChartData();
+        });
+      } else {
+        this.setRefData(null);
+        this.getChartData();
+      }
     }
   }
 
-  setData(rawData) {
+  setRefData(rawData) {
+    if (!rawData) {
+      this.setState({refData: new Map()});
+      return;
+    }
+
+    let refData = new Map();
+    rawData.results.forEach(r => {
+      let key = r.benchmark + ":" + r.metric;
+      refData.set(key, r.value);
+    });
+    this.setState({refData: refData});
+  }
+
+  getChartData() {
+    console.log("LineCharts getting data");
+    let url = "/chartdata/";
+    url += this.props.exe + "/";
+    url += this.props.repo + "/";
+    url += this.props.branch + "/";
+    url += Array.from(this.props.benchmarks).join("|") + "/";
+    url += Array.from(this.props.metrics).join("|") + "/";
+    fetchData(url, data => this.setChartData(data));
+  }
+
+
+  setChartData(rawData) {
     let benchmarksAndMetrics = new Set();
     let shaList = [];
     let revisions = [];
@@ -130,7 +162,13 @@ export class TimeLineChart extends React.Component {
         if (!list) {
           list = [];
         }
-        list.push(y.value);
+        let value = y.value;
+        let refValue = this.state.refData.get(key);
+        let normalized = value;
+        if (refValue) {
+          normalized = value/refValue;
+        }
+        list.push(normalized);
         byBenchMarkAndMetric.set(key, list);
         benchmarksAndMetricsForSha.delete(key);
       });

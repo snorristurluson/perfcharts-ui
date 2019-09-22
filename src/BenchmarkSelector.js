@@ -28,13 +28,14 @@ export class BenchmarkSelector extends React.Component {
 
   render() {
     return (
-      <FormControl component={"benchmarks"}>
+      <FormControl>
         <FormLabel component={"legend"}>Benchmarks</FormLabel>
         {this.state.benchmarks.map(bm => {
           return (
             <FormControlLabel
               control={<Checkbox id={bm.name} onChange={this.handleChange}/>}
               label={bm.name}
+              key={bm.name}
             />
           )
         })}

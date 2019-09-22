@@ -39,8 +39,8 @@ export class ReferenceSelector extends React.Component {
           onChange={this.handleChange}
         >
           {this.state.revisions.map(r => {
-            let value = r.commitid.substring(0,7);
-            let label = value + ": " + r.title.substring(0,20);
+            let value = r.commitid;
+            let label = value.substring(0,7) + ": " + r.title.substring(0,20);
             return <MenuItem key={value} value={value}>{label}</MenuItem>
           })}
         </Select>
