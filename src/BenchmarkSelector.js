@@ -13,7 +13,17 @@ export class BenchmarkSelector extends React.Component {
   }
 
   componentDidMount() {
-    fetchData("/benchmarks/", data => this.setState({benchmarks: data}));
+    this.getData();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.exe !== prevProps.exe && this.props.repo !== prevProps.repo) {
+      this.getData();
+    }
+  }
+
+  getData() {
+    fetchData("/benchmarks/" + this.props.exe + "/" + this.props.repo, data => this.setState({benchmarks: data}));
   }
 
   handleChange(event) {

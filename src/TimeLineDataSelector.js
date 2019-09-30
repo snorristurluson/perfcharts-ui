@@ -25,7 +25,7 @@ export class TimeLineDataSelector extends React.Component {
           <BranchSelector repo={this.props.repo} branch={this.props.branch} onChange={this.props.onBranchChange}/>
         </Grid>
         <Grid item xs={3}>
-          <BenchmarkSelector onChange={this.props.onBenchmarkChange} selected={this.props.benchmarks}/>
+          <BenchmarkSelector exe={this.props.exe} repo={this.props.repo} onChange={this.props.onBenchmarkChange} selected={this.props.benchmarks}/>
         </Grid>
         <Grid item xs={3}>
           <MetricSelector onChange={this.props.onMetricChange} selected={this.props.metrics}/>
